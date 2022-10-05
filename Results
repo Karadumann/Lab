@@ -1,0 +1,37 @@
+--> Total price of available equipment: 351
+
+--> Items that need supply: 
+[ TestTube= width=6, height=30, unitPrice=50.0, availableQuantity=3
+,  TestTube= width=3, height=23, unitPrice=25.0, availableQuantity=10
+,  TestTube= width=5, height=27, unitPrice=17.0, availableQuantity=7
+,  VolumeFlask= volume=330, unitPrice=15.0, availableQuantity=40
+,  VolumeFlask= volume=220, unitPrice=11.0, availableQuantity=30
+,  VolumeFlask= volume=200, unitPrice=9.0, availableQuantity=35
+,  LitmusPaper= length=33, unitPrice=25.0, availableQuantity=5
+]
+
+--> Average price of available materials: 20.647058823529413
+
+--> Items Ordered By Price: 
+[ LitmusSolution= volume=600, unitPrice=5.0, availableQuantity=1
+,  LitmusSolution= volume=700, unitPrice=8.0, availableQuantity=8
+,  VolumeFlask= volume=200, unitPrice=9.0, availableQuantity=35
+,  LitmusSolution= volume=300, unitPrice=10.0, availableQuantity=2
+,  VolumeFlask= volume=220, unitPrice=11.0, availableQuantity=30
+,  LitmusSolution= volume=400, unitPrice=12.0, availableQuantity=3
+,  Microscope= type=Optical brand='Nikon' unitPrice=15.0 availableQuantity=33
+,  VolumeFlask= volume=330, unitPrice=15.0, availableQuantity=40
+,  TestTube= width=5, height=27, unitPrice=17.0, availableQuantity=7
+,  Microscope= type=Electronic brand='Oly' unitPrice=18.0 availableQuantity=10
+,  Microscope= type=Optical brand='Olympus' unitPrice=22.0 availableQuantity=15
+,  TestTube= width=3, height=23, unitPrice=25.0, availableQuantity=10
+,  LitmusPaper= length=33, unitPrice=25.0, availableQuantity=5
+,  LitmusPaper= length=40, unitPrice=30.0, availableQuantity=7
+,  Microscope= type=Electronic brand='Zeiss' unitPrice=32.0 availableQuantity=1
+,  LitmusPaper= length=50, unitPrice=47.0, availableQuantity=10
+,  TestTube= width=6, height=30, unitPrice=50.0, availableQuantity=3
+]
+
+--> Most Expensive Item:  TestTube= width=6, height=30, unitPrice=50.0, availableQuantity=3
+
+
