@@ -1,11 +1,46 @@
+package com.lab.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * Abstract base class for all laboratory items.
  * Implements Supplier interface for inventory management.
  */
+@Entity
+@Table(name = "items")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "item_type")
 public abstract class Item implements Supplier {
-    protected double unitPrice;
-    protected int availableQuantity;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "Name cannot be empty")
+    @Column(nullable = false)
     protected String name;
+
+    @NotNull
+    @Min(value = 0, message = "Unit price cannot be negative")
+    @Column(name = "unit_price", nullable = false)
+    protected double unitPrice;
+
+    @NotNull
+    @Min(value = 0, message = "Available quantity cannot be negative")
+    @Column(name = "available_quantity", nullable = false)
+    protected int availableQuantity;
+
+    @Column(name = "item_type", insertable = false, updatable = false)
+    private String itemType;
+
+    /**
+     * Default constructor for JPA
+     */
+    protected Item() {
+    }
 
     /**
      * Constructor for Item class
@@ -28,6 +63,14 @@ public abstract class Item implements Supplier {
         this.name = name;
         this.unitPrice = unitPrice;
         this.availableQuantity = availableQuantity;
+    }
+
+    /**
+     * Get the unique identifier of the item
+     * @return item id
+     */
+    public Long getId() {
+        return id;
     }
 
     /**

@@ -1,22 +1,41 @@
+package com.lab.model;
+
+import jakarta.persistence.*;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Laboratory class manages the inventory of laboratory equipment and supplies.
  * Provides methods for inventory management, price calculations, and equipment tracking.
  */
+@Entity
+@Table(name = "laboratories")
 public class Laboratory {
-    private final List<Item> inventory;
-    private final Map<String, Integer> usageHistory;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany(mappedBy = "laboratory", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Item> inventory = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "usage_history", joinColumns = @JoinColumn(name = "laboratory_id"))
+    @MapKeyColumn(name = "item_name")
+    @Column(name = "usage_count")
+    private final Map<String, Integer> usageHistory = new HashMap<>();
+
+    /**
+     * Default constructor for JPA
+     */
+    protected Laboratory() {
+    }
 
     /**
      * Constructor initializes the laboratory with default inventory items.
      * @throws RuntimeException if there's an error initializing inventory
      */
     public Laboratory() {
-        this.inventory = new ArrayList<>();
-        this.usageHistory = new HashMap<>();
         initializeInventory();
     }
 
@@ -55,6 +74,14 @@ public class Laboratory {
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize laboratory inventory", e);
         }
+    }
+
+    /**
+     * Get the unique identifier of the laboratory
+     * @return laboratory id
+     */
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -118,6 +145,7 @@ public class Laboratory {
         if (item == null) {
             throw new IllegalArgumentException("Item cannot be null");
         }
+        item.setLaboratory(this);
         inventory.add(item);
     }
 
@@ -127,7 +155,11 @@ public class Laboratory {
      * @return true if item was removed, false otherwise
      */
     public boolean removeItem(Item item) {
-        return inventory.remove(item);
+        if (inventory.remove(item)) {
+            item.setLaboratory(null);
+            return true;
+        }
+        return false;
     }
 
     /**

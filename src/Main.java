@@ -1,3 +1,8 @@
+package com.lab;
+
+import com.lab.model.Laboratory;
+import com.lab.util.DatabaseManager;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -14,7 +19,15 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            laboratory = new Laboratory();
+            // Initialize laboratory from database or create new one
+            List<Laboratory> laboratories = DatabaseManager.findAll(Laboratory.class);
+            if (laboratories.isEmpty()) {
+                laboratory = new Laboratory();
+                laboratory = DatabaseManager.saveOrUpdate(laboratory);
+            } else {
+                laboratory = laboratories.get(0);
+            }
+
             writer = new FileWriter("Results");
             
             while (true) {
@@ -39,6 +52,7 @@ public class Main {
             e.printStackTrace();
         } finally {
             scanner.close();
+            DatabaseManager.close();
         }
     }
 
@@ -144,6 +158,7 @@ public class Main {
         
         try {
             laboratory.recordUsage(itemName, quantity);
+            laboratory = DatabaseManager.saveOrUpdate(laboratory);
             String message = String.format("Recorded usage of %d units for %s", quantity, itemName);
             System.out.println(message);
             writer.write(message + "\n\n");
